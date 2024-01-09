@@ -14,6 +14,10 @@ import { storeToRefs } from 'pinia';
 const talkStore = useTalkStore()
 // 解構後，template中可以直接使用talkList
 const { talkList } = storeToRefs(talkStore)
+talkStore.$subscribe((mutate, state) => {
+    console.log('talkStore裡面保存的數據發生了變化', mutate, state)
+    localStorage.setItem('talkList', JSON.stringify(talkList.value))
+})
 
 
 // 方法
