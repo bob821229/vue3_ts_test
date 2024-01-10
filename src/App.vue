@@ -1,10 +1,11 @@
 <script  lang="ts" setup>
 import { RouterLink, RouterView } from 'vue-router';
+import Header from './components/Header.vue';
 
 </script>
 
 <template>
-  <h2>我是app組件</h2>
+  <Header />
   <!-- <Preson></Preson> -->
   <RouterView />
 </template>
