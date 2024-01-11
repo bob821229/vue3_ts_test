@@ -1,0 +1,52 @@
+[
+    {
+        "serviceName": "Azure 通訊閘道",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure 防火牆",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure雲端服務",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure 對等互連服務",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure 路由伺服器",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure 通訊閘道",
+        "status": "良好",
+        "details": "無異常"
+    },
+    {
+        "serviceName": "Azure 防火牆",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure雲端服務",
+        "status": "警告",
+        "details": "連結不穩定"
+    },
+    {
+        "serviceName": "Azure 對等互連服務",
+        "status": "危急",
+        "details": "連接失敗"
+    },
+    {
+        "serviceName": "Azure 路由伺服器",
+        "status": "危急",
+        "details": "連接失敗"
+    }
+]

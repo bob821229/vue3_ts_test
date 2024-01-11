@@ -15,14 +15,14 @@
     </el-menu>
 
     <!-- 表格 -->
-    <el-table :data="tableData" :default-sort="{ prop: 'date', order: 'descending' }" style="width: 100%" height="500px"
+    <!-- <el-table :data="tableData" :default-sort="{ prop: 'date', order: 'descending' }" style="width: 100%" height="500px"
         border="true" stripe="true" empty-text class="table">
         <el-table-column prop="Rank" label="累積雨量枯旱排名" sortable width="180" />
         <el-table-column prop="EndDateStr" label="年度" sortable width="180" />
         <el-table-column prop="value" label="累積雨量(mm)" sortable />
         <el-table-column prop="StopIrrigationYear" label="停灌年度" />
         <el-table-column prop="StopIrrigationArea" label="停灌區域" />
-    </el-table>
+    </el-table> -->
 </template>
 
 <script setup lang="ts">
@@ -1295,20 +1295,7 @@ const tableData: TableInter[] = [
 
 
 
-// 转换日期格式的函数，只返回年份
-function convertToMinguoYear(dateString) {
-    const date = new Date(dateString);
-    const minguoYear = date.getFullYear() - 1911; // 转换为民国年份
-    return minguoYear;
-}
 
-// 遍历 tableData 数组，将每个对象中的 StartDateStr 转换为民国年份
-const newData = tableData.map(item => ({
-    ...item,
-    "StartDateStr": convertToMinguoYear(item.StartDateStr)
-}));
-
-console.log(newData);
 </script>
 
 <style scoped >
