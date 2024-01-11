@@ -30,7 +30,7 @@
 
         </div>
         <div>
-            <el-table :data="filteredServiceStatus" style="width: 100%;height:500px;" border=true stripe=true>
+            <el-table :data="filteredServiceStatus" style="width: 100%;height:500px" border stripe>
                 <el-table-column prop="serviceName" label="服務名稱"></el-table-column>
                 <el-table-column prop="status" label="狀態" align="center">
                     <template #default="{ row }">
@@ -57,7 +57,7 @@ import axios from 'axios';
 
 
 const originalServiceStatus = ref([]);// 備份原始資料
-const serviceStatus = ref([]);
+const serviceStatus = reactive({ list: [] });
 
 const getStatusTagType = (status: string) => {
     switch (status) {
@@ -85,7 +85,7 @@ async function update() {
     try {
 
         const response = await axios.get(url);
-        serviceStatus.value = response.data;
+        serviceStatus.list = response.data;
         originalServiceStatus.value = response.data;
 
 
@@ -172,17 +172,17 @@ onUnmounted(() => {
 const filterStatus = ref('')
 // 添加 computed 屬性，使用篩選後的數據
 const filteredServiceStatus = computed(() => {
-    return serviceStatus.value;
+    return serviceStatus.list;
 });
 
 function filterData(status) {
     let result = originalServiceStatus.value.filter(item => item.status === status);
-    serviceStatus.value = result;
+    serviceStatus.list = result;
 }
 
 function resetData() {
     // 重置为原始数据
-    serviceStatus.value = originalServiceStatus.value
+    serviceStatus.list = originalServiceStatus.value
 }
 
 
