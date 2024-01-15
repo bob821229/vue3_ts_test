@@ -103,7 +103,7 @@ onMounted(async () => {
 
 // 設定計時器===============================
 const value2 = ref(true)//計時器開關
-let upDateTimer;
+let upDateTimer: any;
 // 刷新頻率
 const upDataTime = ref(5)
 
@@ -169,13 +169,13 @@ onUnmounted(() => {
 
 
 // 篩選器 ==========================
-const filterStatus = ref('')
+
 // 添加 computed 屬性，使用篩選後的數據
 const filteredServiceStatus = computed(() => {
     return serviceStatus.list;
 });
 
-function filterData(status) {
+function filterData(status: string) {
     let result = originalServiceStatus.value.filter(item => item.status === status);
     serviceStatus.list = result;
 }

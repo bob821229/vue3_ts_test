@@ -7,6 +7,7 @@ import Life1 from '../components/Life1.vue';
 import Count from '@/components/Count.vue';
 import LoveTalk from '@/components/LoveTalk.vue';
 import StatusTable from '@/components/StatusTable.vue';
+import Gantt from '@/components/Gantt.vue';
 import { type PersonInter, type Persons, } from '@/types'
 
 let personList = reactive<Persons>([
@@ -33,7 +34,8 @@ let isShow = ref(true)
 
 <template>
   <main>
-    <StatusTable />
+    <Gantt />
+    <!-- <StatusTable /> -->
     <!-- <h2>我是home組件</h2> -->
     <!-- <Count /> -->
     <!-- <LoveTalk /> -->
