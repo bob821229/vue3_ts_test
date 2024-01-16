@@ -1,7 +1,21 @@
 <template>
     <!-- 導覽列 -->
+
     <el-menu :default-active="activeIndex" class="el-menu-demo header " mode="horizontal" @select="handleSelect"
         router="true" text-color="#39a771" background-color="#f3f5f7">
+        <div class="logo_wrap">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="">
+
+            </div>
+            <div class="brand">
+                <span>
+                    農業水資源<br>
+                    智慧決策支援平台
+                </span>
+            </div>
+        </div>
+
         <el-sub-menu :index="nav.path" v-for="(nav, index) in navList" :key="index" class="menu">
             <template #title>
                 {{ nav.name }}
@@ -12,6 +26,13 @@
                 }}</el-menu-item>
             </el-sub-menu>
         </el-sub-menu>
+
+        <div class="login">
+            <el-icon color="#2c8157">
+                <UserFilled />
+            </el-icon>
+            <span>許弘毅</span>
+        </div>
     </el-menu>
 
     <!-- 表格 -->
@@ -1298,7 +1319,7 @@ const tableData: TableInter[] = [
 
 </script>
 
-<style scoped >
+<style scoped lang="scss">
 .header {
     z-index: 1000;
     width: 100%;
@@ -1307,8 +1328,29 @@ const tableData: TableInter[] = [
     box-shadow: inset 0 -1px 0 0 rgba(98, 105, 118, .16);
     margin-bottom: 50px;
     display: flex;
+    align-items: center;
     padding: 0 10px;
     font-weight: bold;
+
+    .logo_wrap {
+        display: flex;
+        align-items: center;
+        color: #2c8157;
+        font-size: 14px;
+        margin-right: 100px;
+
+        img {
+            margin-right: 5px;
+        }
+    }
+
+    .login {
+        margin-left: auto;
+        color: #2c8157;
+        display: flex;
+        align-items: center;
+    }
+
 }
 
 .el-sub-menu__title {

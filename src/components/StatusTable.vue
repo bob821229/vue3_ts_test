@@ -1,5 +1,5 @@
 <template>
-    <div class="table_content">
+    <div class="table_content" v-if="!showErrorPage">
         <h2>Azure 狀態</h2>
         <div class="control_wrap">
             <div>
@@ -11,10 +11,7 @@
                 </el-select>
             </div>
             <el-button type="primary" :icon="Refresh" @click="update">刷新</el-button>
-            <div style="display: flex;align-items: center;gap: 5px;"> 定時器開關:
-                <el-switch v-model="value2" class="ml-2"
-                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
-            </div>
+
 
 
 
@@ -46,12 +43,27 @@
             </el-table>
         </div>
     </div>
+    <div class="error" v-else>
+        <h1>抱歉，發生了HTTP {{ statusCode }}錯誤。請檢查您的請求或趕緊聯繫文龍! <a href="/">0912345678</a></h1>
+    </div>
+    <el-button @click="testError">點擊回傳status code 400</el-button>
 </template>
   
 <script setup lang="ts">
 import { ref, reactive, createVNode, onMounted, onUnmounted, watch, computed } from 'vue';
 import { SuccessFilled, WarningFilled, CircleCloseFilled, Refresh, CircleCheck, Warning, CircleClose } from '@element-plus/icons-vue';
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+
+
+// 创建 axios 实例
+const axiosInstance = axios.create();
+// 创建 mockAdapter 实例
+const mock = new MockAdapter(axiosInstance);
+// 模拟 HTTP 400 错误
+mock.onGet('/public/data/status1.json').reply(400, { error: 'Simulated 400 Error' });
+
+const statusCode = ref('');
 
 // 表格區===============
 
@@ -74,23 +86,60 @@ const getStatusTagType = (status: string) => {
 
 
 
-// 最後更新時間
-const LastUpdatedTime = ref(new Date().toLocaleString());
 
+const LastUpdatedTime = ref(new Date().toLocaleString());// 最後更新時間
+const showErrorPage = ref(false)//錯誤頁面
 // 打api
 async function update() {
     const randomIndex = Math.floor(Math.random() * 5) + 1;
     const url = `/public/data/status${randomIndex}.json`;
     LastUpdatedTime.value = new Date().toLocaleString()
     try {
-
         const response = await axios.get(url);
         serviceStatus.list = response.data;
         originalServiceStatus.value = response.data;
 
 
     } catch (error) {
+        if (error.response && error.response.status === 400) {
+            // 处理HTTP状态码为400的情况
+            console.error('HTTP 400 Error:', error.response.data);
+            showErrorPage.value = true;
+            statusCode.value = error.response.status;
+        } else {
+            // 处理其他请求错误
+            console.error('Request Error:', error.message);
+            showErrorPage.value = false;
 
+        }
+    }
+}
+// 回傳400
+async function testError() {
+    const randomIndex = Math.floor(Math.random() * 5) + 1;
+    const url = `/public/data/status${randomIndex}.json`;
+    LastUpdatedTime.value = new Date().toLocaleString()
+    try {
+        const response = await axiosInstance.get(url);
+        // const response = await axios.get(url);
+        serviceStatus.list = response.data;
+        originalServiceStatus.value = response.data;
+
+
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+
+            console.error('HTTP 400 Error:', error.response.data);
+            showErrorPage.value = true;
+            statusCode.value = error.response.status;
+
+        } else {
+            // 处理其他请求错误
+            console.error('Request Error:', error.message);
+            showErrorPage.value = false;
+
+
+        }
     }
 }
 
@@ -102,7 +151,6 @@ onMounted(async () => {
 
 
 // 設定計時器===============================
-const value2 = ref(true)//計時器開關
 let upDateTimer: any;
 // 刷新頻率
 const upDataTime = ref(5)
@@ -224,5 +272,14 @@ h2 {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.error {
+    text-align: center;
+
+    a {
+        color: red;
+        text-decoration: none;
+    }
 }
 </style>
